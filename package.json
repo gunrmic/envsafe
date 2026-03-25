@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "Encrypted, keychain-backed secret storage. Replaces .env files.",
   "type": "module",
+  "main": "./dist/cli.js",
   "bin": {
     "envsafe": "./dist/cli.js"
   },
