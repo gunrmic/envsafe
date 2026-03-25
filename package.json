@@ -1,6 +1,6 @@
 {
   "name": "@gunrmic/envsafe",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Encrypted, keychain-backed secret storage. Replaces .env files.",
   "type": "module",
   "main": "./dist/cli.js",

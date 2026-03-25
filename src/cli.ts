@@ -23,7 +23,7 @@ const program = new Command();
 program
   .name('envsafe')
   .description('Encrypted, keychain-backed secret storage. Replaces .env files.')
-  .version('0.3.0')
+  .version('0.3.1')
   .enablePositionalOptions();
 
 program
