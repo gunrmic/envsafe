@@ -1,6 +1,6 @@
 {
   "name": "@gunrmic/envsafe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Encrypted, keychain-backed secret storage. Replaces .env files.",
   "type": "module",
   "bin": {

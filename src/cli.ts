@@ -8,13 +8,16 @@ import { get } from './commands/get.js';
 import { list } from './commands/list.js';
 import { audit } from './commands/audit.js';
 import { ci } from './commands/ci.js';
+import { hook } from './commands/hook.js';
+import { exportCmd } from './commands/export.js';
+import { unexportCmd } from './commands/unexport.js';
 
 const program = new Command();
 
 program
   .name('envsafe')
   .description('Encrypted, keychain-backed secret storage. Replaces .env files.')
-  .version('0.1.0')
+  .version('0.2.0')
   .enablePositionalOptions();
 
 program
@@ -63,5 +66,21 @@ program
   .description('Generate CI integration snippet')
   .option('--platform <name>', 'CI platform (github, gitlab, circleci)')
   .action(ci);
+
+program
+  .command('hook')
+  .description('Output shell hook script for auto-injection')
+  .argument('<shell>', 'Shell type (zsh, bash, powershell)')
+  .action(hook);
+
+program
+  .command('_export', { hidden: true })
+  .option('--shell <type>', 'Shell type for output format', 'posix')
+  .action(exportCmd);
+
+program
+  .command('_unexport', { hidden: true })
+  .option('--shell <type>', 'Shell type for output format', 'posix')
+  .action(unexportCmd);
 
 program.parse();

@@ -61,6 +61,31 @@ envsafe run -- npm start
 envsafe run --only DATABASE_URL,PORT -- node server.js
 ```
 
+## Shell Hook (Auto-inject)
+
+Set up once, then `npm start` just works — no wrappers needed.
+
+```bash
+# zsh (~/.zshrc)
+eval "$(envsafe hook zsh)"
+
+# bash (~/.bashrc)
+eval "$(envsafe hook bash)"
+
+# PowerShell ($PROFILE)
+envsafe hook powershell | Invoke-Expression
+```
+
+When you `cd` into a project with a vault, secrets are automatically exported into your shell. When you leave, they're unset.
+
+```
+$ cd my-project
+envsafe: loaded 5 secrets from vault
+$ npm start              # secrets are in process.env
+$ cd ..
+envsafe: unloaded secrets
+```
+
 ## Commands
 
 ### `envsafe init`
@@ -129,6 +154,16 @@ Checks for:
 - Static tokens in GitHub Actions workflows
 
 Exit code 0 if clean, 1 if issues found (CI-friendly).
+
+### `envsafe hook <shell>`
+
+Output a shell hook script for auto-injection. Supported shells: `zsh`, `bash`, `powershell`.
+
+```bash
+envsafe hook zsh          # output zsh hook
+envsafe hook bash         # output bash hook
+envsafe hook powershell   # output PowerShell hook
+```
 
 ### `envsafe ci --platform <name>`
 
