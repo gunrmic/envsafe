@@ -26,13 +26,13 @@ The threat model is **filesystem-level exposure**, not in-process memory access.
 ## Installation
 
 ```bash
-npm install -g envsafe
+npm install -g @gunrmic/envsafe
 ```
 
 Or use directly:
 
 ```bash
-npx envsafe init
+npx @gunrmic/envsafe init
 ```
 
 ## Quick Start
@@ -147,7 +147,7 @@ A fresh IV is generated on every write to prevent nonce reuse.
 ## Contributing
 
 ```bash
-git clone https://github.com/your-org/envsafe
+git clone https://github.com/gunrmic/envsafe
 cd envsafe
 yarn install
 yarn test

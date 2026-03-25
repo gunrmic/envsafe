@@ -1,11 +1,13 @@
 {
-  "name": "envsafe",
+  "name": "@gunrmic/envsafe",
   "version": "0.1.0",
   "description": "Encrypted, keychain-backed secret storage. Replaces .env files.",
   "type": "module",
   "bin": {
     "envsafe": "./dist/cli.js"
   },
+  "license": "MIT",
+  "files": ["dist"],
   "keywords": ["env", "secrets", "security", "dotenv", "vault", "keychain"],
   "engines": {
     "node": ">=18.0.0"
