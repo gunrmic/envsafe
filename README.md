@@ -1,5 +1,8 @@
 # envsafe
 
+[![npm](https://img.shields.io/npm/v/@gunrmic/envsafe)](https://www.npmjs.com/package/@gunrmic/envsafe)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Encrypted, keychain-backed secret storage. Replaces `.env` files.
 
 ## The Problem
@@ -22,6 +25,13 @@ The [LiteLLM/Trivy supply chain attack](https://www.bleepingcomputer.com/news/se
 - A fully compromised machine
 
 The threat model is **filesystem-level exposure**, not in-process memory access. Use `--scope` and `--only` to limit which secrets each command can access.
+
+## Prerequisites
+
+- **macOS**: Nothing required (`security` CLI is built-in)
+- **Linux**: Install libsecret — `sudo apt install libsecret-tools` (Ubuntu/Debian) or `sudo dnf install libsecret` (Fedora)
+- **Windows**: Nothing required (`cmdkey` and PowerShell are built-in)
+- **CI/CD**: Set `ENVSAFE_KEY` env var — no keychain needed
 
 ## Installation
 
@@ -130,13 +140,22 @@ envsafe ci --platform gitlab
 envsafe ci --platform circleci
 ```
 
+Store one secret (`ENVSAFE_KEY`) in GitHub Secrets instead of all your secrets individually:
+
+```yaml
+- name: Run with envsafe
+  env:
+    ENVSAFE_KEY: ${{ secrets.ENVSAFE_KEY }}
+  run: npx @gunrmic/envsafe run -- npm test
+```
+
 ## Security Design
 
 - **Encryption**: AES-256-GCM with scrypt key derivation
 - **Key storage**: OS keychain (macOS Keychain, Linux libsecret, Windows Credential Manager)
 - **No vendor storage**: Everything stays local. No accounts, no servers, no SaaS
 - **CI/CD**: Set `ENVSAFE_KEY` environment variable to decrypt without a keychain
-- **Zero native dependencies**: Uses OS-native credential CLIs, no compiled addons
+- **No compiled addons or native bindings**: Keychain access uses OS-native CLIs (`/usr/bin/security` on macOS, `secret-tool` on Linux, `cmdkey`/PowerShell on Windows). This means no node-gyp, no prebuilt binaries, and no supply chain risk from native npm packages
 
 ### Vault Format
 
