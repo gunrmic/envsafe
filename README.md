@@ -138,6 +138,63 @@ envsafe list
 envsafe list --json
 ```
 
+### `envsafe rm <KEY>`
+
+Delete a secret from the vault.
+
+```bash
+envsafe rm API_KEY           # prompts for confirmation
+envsafe rm API_KEY --force   # skip confirmation
+```
+
+### `envsafe scope <action> [name] [keys...]`
+
+Manage secret scopes for fine-grained access control with `run --scope`.
+
+```bash
+envsafe scope add web DB_URL API_KEY    # add keys to scope
+envsafe scope rm web API_KEY            # remove key from scope
+envsafe scope rm web                    # delete entire scope
+envsafe scope list                      # show all scopes
+```
+
+### `envsafe export-key`
+
+Print the master encryption key (for CI/CD setup).
+
+```bash
+envsafe export-key    # prints hex key to stdout
+```
+
+### `envsafe import <file>`
+
+Import secrets from a `.env` or `.json` file into an existing vault.
+
+```bash
+envsafe import .env.production         # merge into vault
+envsafe import secrets.json            # import from JSON
+envsafe import .env.new --overwrite    # replace all secrets
+```
+
+### `envsafe rotate`
+
+Generate a new master encryption key and re-encrypt the vault.
+
+```bash
+envsafe rotate    # prints new key for CI update
+```
+
+### `envsafe diff [file]`
+
+Compare vault keys against a reference file (default: `.env.example`).
+
+```bash
+envsafe diff                  # compare against .env.example
+envsafe diff .env.staging     # compare against specific file
+```
+
+Exit code 1 if any keys are missing from the vault (CI-friendly).
+
 ### `envsafe audit`
 
 Scan your repository for secret exposure risks.
